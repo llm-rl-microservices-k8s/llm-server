@@ -44,19 +44,61 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Run tests
+## 🧪 Test với Postman
+
+Khi server chạy, mở Postman và gửi request đến endpoint:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+POST http://localhost:3001/chat
 ```
 
+Ví dụ body JSON hợp lệ:
+
+```bash
+{
+  "message": "Chuyển nhóm sản phẩm A sang subscription theo tháng",
+  "tenant_id": "tenant-demo",
+  "role": "admin",
+  "lang": "vi"
+}
+```
+## ✅ Response mẫu
+
+Khi gửi đúng, bạn sẽ nhận được response dạng:
+
+```bash
+{
+  "proposal_text": "Đề xuất chuyển nhóm sản phẩm A sang gói đăng ký theo tháng.",
+    "changeset": 
+    {
+        "model": "product_group",
+        "features": [
+            {
+                "key": "product_group_name",
+                "value": "nhóm sản phẩm A"
+            },
+            {
+                "key": "billing_cycle",
+                "value": "monthly"
+            }
+        ],
+        "impacted_services": [
+            "Billing",
+            "Subscription Management"
+        ]
+    }
+    ,
+    "metadata": 
+    {
+        "intent": "change_subscription_plan",
+        "confidence": 0.9,
+        "risk": "low"
+    }
+}
+
+```
+
+Từ response này bạn chuyển nó vào bmms-changeSet
 ## Deployment
 
 When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
